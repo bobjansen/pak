@@ -26,10 +26,10 @@ pak_setup <- function(mode = c("auto", "download", "copy"),
   if (!file.exists(lib)) {
     if (mode == "auto" && !quiet && !testthat_testing()) {
       message(
-        "\n`pak` needs to create a private package library in",
-        "\n`", lib, "`. ",
-        "\nIt will try to copy packages from your regular library",
-        "\nSee `?pak_setup()` for alternatives.\n")
+        "`pak` needs to create a private package library in\n",
+        "`", lib, "`.\n",
+        "It will try to copy packages from your regular library\n",
+        "See `?pak_setup()` for alternatives.")
 
       ans <- readline("Do you want to continue (Y/n)? ")
       if (! ans %in% c("", "y", "Y")) stop("Aborted", call. = FALSE)
@@ -49,7 +49,7 @@ pak_setup <- function(mode = c("auto", "download", "copy"),
   }
 
   if (!done) {
-    if (!quiet) message("\nInstalling packages into private lib")
+    if (!quiet) message("Installing packages into private lib")
     download_private_lib(quiet = quiet)
   }
 

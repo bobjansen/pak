@@ -179,7 +179,7 @@ download_private_lib <- function(quiet = FALSE) {
   if (!is.null(remotes)) {
     remotes <- str_trim(strsplit(remotes, ",\\s*")[[1]])
     if (!quiet) {
-      message("\n! This is a _development_ version of pak,\n",
+      message("! This is a _development_ version of pak,\n",
               "! some packages will be installed from *GitHub*\n\n")
     }
     for (rem in remotes) {
