@@ -189,6 +189,8 @@ pkg_install <- function(pkg, lib = .libPaths()[[1L]], upgrade = FALSE,
 
   start <- Sys.time()
 
+  pkg <- qualify_package_names(pkg)
+
   any <- remote(
     function(...) get("pkg_install_make_plan", asNamespace("pak"))(...),
     list(pkg = pkg, lib = lib, upgrade = upgrade, ask = ask, start = start))
@@ -202,6 +204,16 @@ pkg_install <- function(pkg, lib = .libPaths()[[1L]], upgrade = FALSE,
     list(remotes = NULL, lib = lib))
 
   invisible(inst)
+}
+
+qualify_package_names <- function(pkg) {
+  # We don't require that a package name starts with a letter, and
+  # that it ends with a letter or number. This is for private CRAN-like
+  # repos that might have different rules for package names
+  relaxed_pkg_name_rx <- "^[[:alnum:]][[:alnum:].]*$"
+  plain <- grepl(relaxed_pkg_name_rx, pkg)
+  if (any(plain)) pkg[plain] <- paste0("default::", pkg[plain])
+  pkg
 }
 
 pkg_install_make_plan <- function(pkg, lib, upgrade, ask, start) {
